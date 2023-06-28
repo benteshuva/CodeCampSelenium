@@ -1,6 +1,7 @@
 package au.com.ncs.models;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -37,10 +38,11 @@ public class Form {
             System.out.println(states);
             if (state.getText().equalsIgnoreCase(stateOption)) {
                 state.click();
-                break;
+                return;
             }
 //            throw new Exception("No such state was found in the list");
         }
+        throw new NotFoundException("Could not find the state: "+stateOption);
     }
 
     public void clickAgree() {

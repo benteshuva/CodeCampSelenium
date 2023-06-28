@@ -1,15 +1,10 @@
 package au.com.ncs.tests;
 
-import au.com.ncs.models.Form;
-import au.com.ncs.models.Toolbar;
+import au.com.ncs.models.*;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.*;
+import org.openqa.selenium.support.ui.*;
 
 import java.time.Duration;
 import java.util.List;
@@ -94,6 +89,19 @@ public class SeleniumTests {
                 driver.findElement(welcomeBy).getText());
     }
 
+    @Test
+    public void explorePlanetEarthTest() {
+        new Toolbar(driver).clickPlanets();
+        //Planets planets = new Planets(driver);
+
+        List<WebElement> allPlanets = driver.findElements(By.cssSelector("li + h2"));
+        for (WebElement planet:allPlanets) {
+            if (planet.getText().equalsIgnoreCase("Earth"))
+            {
+               // planet
+            }
+        }
+    }
     @AfterEach
     public void cleanUp() {
         driver.quit();

@@ -13,4 +13,7 @@ public class Toolbar {
     public void clickForms() {
         driver.findElement(By.cssSelector("a[aria-label=forms]")).click();
     }
+    public void clickPlanets() {
+        driver.findElement(By.cssSelector("a[aria-label=planets]")).click();
+    }
 }
