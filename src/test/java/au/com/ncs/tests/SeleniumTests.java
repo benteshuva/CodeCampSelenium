@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 import static org.hamcrest.Matcher.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SeleniumTests {
     private WebDriver driver;
@@ -92,16 +93,11 @@ public class SeleniumTests {
     @Test
     public void explorePlanetEarthTest() {
         new Toolbar(driver).clickPlanets();
-        //Planets planets = new Planets(driver);
-
-        List<WebElement> allPlanets = driver.findElements(By.cssSelector("li + h2"));
-        for (WebElement planet:allPlanets) {
-            if (planet.getText().equalsIgnoreCase("Earth"))
-            {
-               // planet
-            }
-        }
+        new PlanetPage(driver).getPlanet("earth").clickExplore();
+        Assertions.assertEquals("Exploring Earth", new PlanetPage(driver).getPopUpMsg());
     }
+
+
     @AfterEach
     public void cleanUp() {
         driver.quit();

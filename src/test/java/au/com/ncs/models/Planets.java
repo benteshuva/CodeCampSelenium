@@ -1,13 +1,20 @@
 package au.com.ncs.models;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public class Planets {
-    private WebDriver driver;
-    private WebDriverWait wait;
+    private final WebElement planetElement;
 
-    public Planets(WebDriver driver) {
-        this.driver = driver;
+    public Planets(WebElement planetElement) {
+        this.planetElement = planetElement;
+    }
+
+    public String getName() {
+        return planetElement.findElement(By.className("name")).getText();
+    }
+
+    public void clickExplore() {
+        planetElement.findElement(By.tagName("button")).click();
     }
 }
