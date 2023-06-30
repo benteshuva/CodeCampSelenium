@@ -17,4 +17,12 @@ public class Planets {
     public void clickExplore() {
         planetElement.findElement(By.tagName("button")).click();
     }
+
+    public long getDistance() {
+        String distanceDirty = planetElement.findElement(By.className("distance")).getText();
+        System.out.println(distanceDirty);
+        String distanceClean = distanceDirty.replaceAll("[^0-9]+" , "");
+        System.out.println("Distance after filter : "+ distanceClean);
+        return Long.parseLong(distanceClean);
+    }
 }

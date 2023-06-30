@@ -1,5 +1,6 @@
 package au.com.ncs.models;
 
+import au.com.ncs.strategies.MatchStrategyInterface;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class PlanetPage {
     private WebDriver driver;
@@ -26,9 +28,9 @@ public class PlanetPage {
         return driver.findElement(By.className("popup-message")).getText();
     }
 
-    public Planets getPlanet(String planetName) {
+    public Planets getPlanet(Predicate<Planets> strategy) {
         for (Planets planet : getAllPlanets()) {
-            if (planet.getName().equalsIgnoreCase(planetName)) {
+            if (strategy.test(planet)) {
                 return planet;
             }
         }

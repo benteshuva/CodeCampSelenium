@@ -1,11 +1,15 @@
 package au.com.ncs.tests;
 
 import au.com.ncs.models.*;
+import au.com.ncs.strategies.NameMatchStrategy;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.*;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.*;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -22,7 +26,7 @@ public class SeleniumTests {
     private String url = "https://d18u5zoaatmpxx.cloudfront.net/#/";
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws MalformedURLException {
         //Init driver and maximize it.
         driver = getWebDriver();
         driver.manage().window().maximize();
@@ -93,8 +97,16 @@ public class SeleniumTests {
     @Test
     public void explorePlanetEarthTest() {
         new Toolbar(driver).clickPlanets();
-        new PlanetPage(driver).getPlanet("earth").clickExplore();
+        //new PlanetPage(driver).getPlanet(new NameMatchStrategy("earth")).clickExplore();
+        new PlanetPage(driver).getPlanet(planet -> planet.getName().equalsIgnoreCase("earth")).clickExplore();
         Assertions.assertEquals("Exploring Earth", new PlanetPage(driver).getPopUpMsg());
+    }
+
+    @Test
+    public void distanceToPlanetEarthTest() {
+        new Toolbar(driver).clickPlanets();
+//        new PlanetPage(driver).getPlanet(planet -> planet.getName().equalsIgnoreCase("earth")).getDistance() == 6371l);
+
     }
 
 
@@ -103,10 +115,14 @@ public class SeleniumTests {
         driver.quit();
     }
 
-    private static WebDriver getWebDriver() {
+    private static WebDriver getWebDriver() throws MalformedURLException {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         WebDriver driver = new ChromeDriver(options);
         return driver;
+
+//        var options = new ChromeOptions();
+//        WebDriver driver = new RemoteWebDriver(new URL("http://localhost:4444"), options);
+//        return driver;
     }
 }
